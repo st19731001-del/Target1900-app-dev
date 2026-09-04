@@ -512,15 +512,29 @@ window.addEventListener("appinstalled", () => {
 // ==========================================
 // LINE シェアボタンの制御
 // ==========================================
-const lineShareBtn = document.getElementById("lineShareBtn");
 
+// 1. トップ画面のLINEシェアボタン
+const lineShareBtn = document.getElementById("lineShareBtn");
 if (lineShareBtn) {
   lineShareBtn.addEventListener("click", () => {
-    // シェアしたいメッセージとアプリURLを指定
     const shareText = "TARGET1900の単語学習アプリで一緒に勉強しよう！";
-    const shareUrl = window.location.href; // 現在のWebページのURL
+    const shareUrl = window.location.href;
+    const lineUrl = `https://line.me/R/share?text=${encodeURIComponent(shareText + "\n" + shareUrl)}`;
+    window.open(lineUrl, '_blank');
+  });
+}
+
+// 2. 結果画面のLINEシェアボタン
+const lineShareResultBtn = document.getElementById("lineShareResultBtn");
+if (lineShareResultBtn) {
+  lineShareResultBtn.addEventListener("click", () => {
+    // スコアのテキストがあれば取得（例: "18 / 20"）
+    const scoreText = document.getElementById("scoreDisplay") ? document.getElementById("scoreDisplay").textContent : "";
+    const shareText = scoreText 
+      ? `TARGET1900テストで 【${scoreText}】 でした！みんなも挑戦してみてね！` 
+      : "TARGET1900の単語学習アプリで一緒に勉強しよう！";
     
-    // LINEのスキームURLを作成して開く
+    const shareUrl = window.location.href;
     const lineUrl = `https://line.me/R/share?text=${encodeURIComponent(shareText + "\n" + shareUrl)}`;
     window.open(lineUrl, '_blank');
   });
