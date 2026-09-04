@@ -475,3 +475,53 @@ function showResult(isGameOver = false) {
     window.open(`https://line.me/R/msg/text/?${encodeURIComponent(text)}`, "_blank");
   };
 }
+// ==========================================
+// PWA インストールボタンの制御
+// ==========================================
+let deferredPrompt = null;
+const pwaInstallBtn = document.getElementById("pwaInstallBtn");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  // ブラウザ標準のミニバナーを非表示化
+  e.preventDefault();
+  deferredPrompt = e;
+  // Web版（未インストール）の時だけボタンを表示
+  if (pwaInstallBtn) {
+    pwaInstallBtn.classList.remove("hidden");
+  }
+});
+
+if (pwaInstallBtn) {
+  pwaInstallBtn.addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`Install choice: ${outcome}`);
+    deferredPrompt = null;
+    pwaInstallBtn.classList.add("hidden");
+  });
+}
+
+// 既にアプリとして起動している場合やインストール完了時はボタンを隠す
+window.addEventListener("appinstalled", () => {
+  if (pwaInstallBtn) pwaInstallBtn.classList.add("hidden");
+  deferredPrompt = null;
+});
+
+
+// ==========================================
+// LINE シェアボタンの制御
+// ==========================================
+const lineShareBtn = document.getElementById("lineShareBtn");
+
+if (lineShareBtn) {
+  lineShareBtn.addEventListener("click", () => {
+    // シェアしたいメッセージとアプリURLを指定
+    const shareText = "TARGET1900の単語学習アプリで一緒に勉強しよう！";
+    const shareUrl = window.location.href; // 現在のWebページのURL
+    
+    // LINEのスキームURLを作成して開く
+    const lineUrl = `https://line.me/R/share?text=${encodeURIComponent(shareText + "\n" + shareUrl)}`;
+    window.open(lineUrl, '_blank');
+  });
+}
