@@ -8,16 +8,15 @@
   <link rel="stylesheet" href="style.css">
 
   <!-- PWA用の設定 -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#4f46e5">
-<link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="apple-touch-icon" href="icon-192.png">
 
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
-  }
-</script>
-
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
 </head>
 <body>
 
@@ -105,33 +104,29 @@
             </select>
           </div>
 
-          
           <div id="customCountGroup" class="form-group hidden">
             <input type="number" id="customQuestionCount" placeholder="出題数を入力 (例: 15)" min="1" max="1900">
           </div>
         </div>
 
-        <!-- スタートボタン（モードによってJSで切替） -->
+        <!-- スタートボタン -->
         <button id="startQuizBtn" class="btn primary-btn">テスト開始！</button>
         <button id="hardBtn" class="btn hard-btn hidden">🔥 サバイバル開始！</button>
+
+        <!-- アプリ操作・シェアボタンエリア -->
+        <div style="margin-top: 15px; text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center;">
+          <!-- インストールボタン（対応環境でのみJSで非表示解除） -->
+          <button id="pwaInstallBtn" class="btn hidden" style="background-color: #4f46e5; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer;">
+            📲 アプリをインストール
+          </button>
+
+          <!-- LINEシェアボタン（常時表示） -->
+          <button id="lineShareBtn" class="btn" style="background-color: #06C755; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            💬 LINEで友達に教える
+          </button>
+        </div>
       </div>
 
- 
- <!-- アプリ操作・シェアボタンエリア -->
-<div class="action-buttons-container" style="margin-top: 20px; text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center;">
-  
-  <!-- インストールボタン（初期状態は非表示） -->
-  <button id="pwaInstallBtn" class="hidden" style="padding: 10px 20px; font-weight: bold; background-color: #4f46e5; color: white; border: none; border-radius: 8px; cursor: pointer; width: 80%; max-width: 300px;">
-    📲 アプリをインストール
-  </button>
-
-  <!-- LINEシェアボタン -->
-  <button id="lineShareResultBtn" style="padding: 10px 20px; font-weight: bold; background-color: #06C755; color: white; border: none; border-radius: 8px; cursor: pointer; width: 80%; max-width: 300px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-    <span>LINEで友達に教える</span>
-  </button>
-
-</div>
-     
       <!-- 単語帳設定フォーム -->
       <div id="cardSetupForm" class="hidden">
         <div class="form-group">
@@ -188,7 +183,7 @@
         <button id="retryWrongBtn" class="btn secondary-btn hidden">🔄 間違えた問題のみ再挑戦</button>
         <button id="restartBtn" class="btn primary-btn">🔁 もう一度同じ条件で挑戦</button>
         <button id="backToHomeBtn" class="btn outline-btn">🏠 設定画面に戻る</button>
-        <button id="lineShareBtn" class="btn line-btn">💬 LINEで結果をシェア</button>
+        <button id="lineShareResultBtn" class="btn line-btn">💬 LINEで結果をシェア</button>
       </div>
     </section>
 
